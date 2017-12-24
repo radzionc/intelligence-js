@@ -1,0 +1,20 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "mathjs": "^3.18.0",
+    "mnist": "^1.1.0",
+    "timekeeper": "^2.0.0"
+  },
+  "devDependencies": {
+    "jest": "^22.0.4"
+  }
+}
