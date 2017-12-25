@@ -46,12 +46,24 @@ it('should dot', () => {
   )
 
   const result = one.dot(other)
-  console.log(result)
   const expected = new Matrix(
     [15, 27],
     [6, 7],
     [26, 63]
   )
 
+  expect(result.equalTo(expected)).toBe(true)
+})
+
+it('should elementMap', () => {
+  const matrix = new Matrix(
+    [1, 2, 3],
+    [4, 5, 6]
+  )
+  const expected = new Matrix(
+    [0, 0, 0],
+    [0, 0, 0]
+  )
+  const result = matrix.elementMap(_ => 0)
   expect(result.equalTo(expected)).toBe(true)
 })

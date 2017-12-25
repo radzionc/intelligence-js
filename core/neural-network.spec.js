@@ -1,26 +1,29 @@
 const { set } = require('mnist')
 
-const { randomMatrix, predictAfterAllTraining, neuralNetwork, normalizeInput, normalizeSet, toMatrix, updateWeights } = require('./neural-network')
+const { predictAfterAllTraining, neuralNetwork } = require('./neural-network')
+const { normalizedSet } = require('./set')
 
-it('should create neural network', () => {
-    // const ts = Date.now()
-    // const { training, test } = set(800, 200)
+const maxIn = list => list.indexOf(Math.max(...list))
 
-    // const train = neuralNetwork(784, 200, 10)
 
-    // const predict = predictAfterAllTraining(training.map(normalizeSet), train)
+it('neural network', () => {
+    const ts = Date.now()
+    const { training, test } = set(80, 20)
 
-    // const tr = Date.now()
-    // const testResult = test
-    //     .map(normalizeSet)
-    //     .map(({ input, output }) => {
-    //         const result = predict(input)
-    //         const maxIn = list => list.indexOf(Math.max(...list))
-    //         const maxInResult = maxIn(result)
-    //         const maxInOutput = maxIn(output)
- 
-    //         return maxInResult === maxInOutput
-    //     })
-    //     .filter(b => b).length / test.length
-    // console.log(testResult)
+    const train = neuralNetwork(784, 200, 10)
+
+    const predict = predictAfterAllTraining(
+        training.map(normalizedSet),
+        train
+    )
+
+    const tr = Date.now()
+    const testResult = test
+        .map(normalizedSet)
+        .map(({ input, output }) => {
+            const result = predict(input)
+            return maxIn(result) === maxIn(output)
+        })
+        .filter(b => b).length / test.length
+    console.log(testResult)
 })

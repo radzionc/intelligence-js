@@ -1,7 +1,18 @@
+const fillArray = (length, filler) => Array.apply(null, Array(length)).map(filler)
+
 module.exports = class Matrix extends Array {
   constructor(...items) {
     super(...items)
   }
+
+  static random(rowsNumber, columnsNumber, randomizer) {
+    return new Matrix(...
+        fillArray(rowsNumber, _ =>
+            fillArray(columnsNumber, _ => randomizer())
+        )
+    )
+  }
+
   transpose() {
     return new Matrix(...
       this.reduceRight((acc, item) => [ ...acc, item], [])
@@ -12,24 +23,26 @@ module.exports = class Matrix extends Array {
     )
   }
 
-  elementMap(other, func) {
-    return new Matrix(...
-      this.map((row, rowIndex) =>
-        row.map((element, columnIndex) => func(element, other[rowIndex][columnIndex]))
-      )
+  operationMap(other, func) {
+    return this.map((row, rowIndex) =>
+      row.map((element, columnIndex) => func(element, other[rowIndex][columnIndex]))
     )
   }
 
+  elementMap(func) {
+    return this.map(row => row.map(func))
+  }
+
   multiply(other) {
-    return this.elementMap(other, (one, other) => one * other)
+    return this.operationMap(other, (one, other) => one * other)
   }
 
   subtract(other) {
-    return this.elementMap(other, (one, other) => one - other)
+    return this.operationMap(other, (one, other) => one - other)
   }
 
   add(other) {
-    return this.elementMap(other, (one, other) => one + other)
+    return this.operationMap(other, (one, other) => one + other)
   }
 
   dot(other) {
@@ -53,5 +66,9 @@ module.exports = class Matrix extends Array {
         element === other[rowIndex][columnIndex]
       )
     )
+  }
+
+  info() {
+    return `(${this.length}, ${this[0] ? this[0].length : 0})`
   }
 }
