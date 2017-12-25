@@ -7,9 +7,9 @@ it('should transpose', () => {
   )
   const result = matrix.transpose()
   const expected = new Matrix(
-    [4, 1],
-    [5, 2],
-    [6, 3]
+    [1, 4],
+    [2, 5],
+    [3, 6]
   )
   expect(result.equalTo(expected)).toBe(true)
 })

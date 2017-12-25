@@ -8,7 +8,7 @@ const maxIn = list => list.indexOf(Math.max(...list))
 
 it('neural network', () => {
     const ts = Date.now()
-    const { training, test } = set(80, 20)
+    const { training, test } = set(1000, 200)
 
     const train = neuralNetwork(784, 200, 10)
 
@@ -16,7 +16,7 @@ it('neural network', () => {
         training.map(normalizedSet),
         train
     )
-
+    console.log('training ', (Date.now() - ts) * 0.001)
     const tr = Date.now()
     const testResult = test
         .map(normalizedSet)
@@ -25,5 +25,6 @@ it('neural network', () => {
             return maxIn(result) === maxIn(output)
         })
         .filter(b => b).length / test.length
+    console.log('testing ', (Date.now() - tr) * 0.001)
     console.log(testResult)
 })

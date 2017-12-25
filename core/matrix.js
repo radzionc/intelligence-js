@@ -1,3 +1,5 @@
+const { matrix, transpose } = require('mathjs')
+
 const fillArray = (length, filler) => Array.apply(null, Array(length)).map(filler)
 
 module.exports = class Matrix extends Array {
@@ -15,11 +17,7 @@ module.exports = class Matrix extends Array {
 
   transpose() {
     return new Matrix(...
-      this.reduceRight((acc, item) => [ ...acc, item], [])
-      .reduce(
-        (acc, row, rowIndex) => acc.map((r, i) => [ ...r, row[i] ]),
-        this[0].map(_ => [])
-      )
+      this[0].map((_, i) => this.column(i))
     )
   }
 
