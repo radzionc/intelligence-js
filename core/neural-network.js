@@ -3,6 +3,12 @@ const Matrix = require('./matrix')
 const { sigmoid } = require('./activation-functions')
 
 
+const gaussianRandom = (from, to) => Math.floor(from + Array
+    .apply(null, Array(6))
+    .map(Math.random)
+    .reduce((acc, n) => acc + n) / 6 * (to - from + 1))
+
+
 const updateWeights = (learningRate, errors, oneOutputs, otherOutputs) =>
     errors.multiply(
         oneOutputs.multiply(
@@ -39,8 +45,8 @@ const makePredict = (inputWeightsMatrix, outputWeightsMatrix, activationFunction
 }
 
 const neuralNetwork = (inputNodesNumber, hiddenNodesNumber, outputNodesNumber, learningRate = 0.1, activationFunction = sigmoid) => {
-    const inputWeightsMatrix = Matrix.random(hiddenNodesNumber, inputNodesNumber, () => random(-0.5, 0.5, true))
-    const outputWeightsMatrix = Matrix.random(outputNodesNumber, hiddenNodesNumber, () => random(-0.5, 0.5, true))
+    const inputWeightsMatrix = Matrix.random(hiddenNodesNumber, inputNodesNumber, () => gaussianRandom(-0.5, 0.5))
+    const outputWeightsMatrix = Matrix.random(outputNodesNumber, hiddenNodesNumber, () => gaussianRandom(-0.5, 0.5))
 
     return makeTrain(inputWeightsMatrix, outputWeightsMatrix, learningRate, activationFunction)
 }

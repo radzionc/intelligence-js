@@ -8,7 +8,7 @@ const maxIn = list => list.indexOf(Math.max(...list))
 
 it('neural network', () => {
     const ts = Date.now()
-    const { training, test } = set(1000, 200)
+    const { training, test } = set(2000, 400)
 
     const train = neuralNetwork(784, 200, 10)
 
